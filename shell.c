@@ -1,29 +1,11 @@
 #include "shell.h"
 
 
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-int _printstring(char *str)
-{
-	int i = 0, count = 0;
-
-	while(str[i])
-	{
-		count += _putchar(str[i]);
-		i++;
-	}
-	return (count);
-}
-
-
 int main(int c, char **argv, char **env)
 {
 	(void)c; (void) argv;
-	char *prompt = "(Shell)$ ";
-	char *buffer = NULL;
+	char *prompt = "(feliamshell)$ ";
+	char *buffer = NULL, *path;
 	char *delim =  " \n";
 	char *arg[1024];
 	size_t buff_size = 0;
@@ -62,12 +44,26 @@ int main(int c, char **argv, char **env)
 	arg[j] = strtok(buffer, delim);
 	while (arg[j] != NULL)
 	{
-		printf("arg[%d] is : %s\n",j , arg[j]);
 		j++;
 		arg[j] = strtok(NULL, delim);
 	}
+	arg[j] = NULL;
+	
+	/*path handling*/
+	path = get_locate(arg[0]);
 
-
+	if (path == NULL)
+	{
+		/*check for built in*/
+		if (_builtincmd(arg) != 0)
+		{
+			_printstring("command not founf\n");
+			continue;
+		}
+		else
+		/*_printstring("command not found\n");*/
+		continue;
+	}
 
 	child_ID = fork();
 	if (child_ID < 0)
@@ -77,7 +73,7 @@ int main(int c, char **argv, char **env)
 	}
 	else if (child_ID == 0)
 	{
-		if (execve(arg[0], arg, env) == -1)
+		if (execve(path, arg, env) == -1)
 			_printstring("Command does not exit\n");
 	}
 	else
@@ -91,6 +87,7 @@ int main(int c, char **argv, char **env)
 
 
 	free(buffer);
+	free(path);
 	
 	return (0);
 }
