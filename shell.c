@@ -8,7 +8,8 @@ int _putchar(char c)
 
 int _printstring(char *str)
 {
-	int i = 0, count =0;
+	int i = 0, count = 0;
+
 	while(str[i])
 	{
 		count += _putchar(str[i]);
@@ -23,12 +24,13 @@ int main(int c, char **argv, char **env)
 	(void)c; (void) argv;
 	char *prompt = "(Shell)$ ";
 	char *buffer = NULL;
-	char *delim =  "\n";
+	char *delim =  " \n";
 	char *arg[1024];
 	size_t buff_size = 0;
 	ssize_t n_chars;
 	pid_t child_ID;
 	int status, i, j;
+	
 
 	while (1)
 	{
@@ -43,9 +45,11 @@ int main(int c, char **argv, char **env)
 	{
 	
 		free(buffer);
-		 exit (0);
+		 exit(0);
 	}
 	i = 0;
+
+	/*each single charcter in buffer and see if it a new line char*/
 	while (buffer[i])
 	{
 		if (buffer[i] == '\n')
@@ -53,20 +57,23 @@ int main(int c, char **argv, char **env)
 	i++;
 	}
 
+
 	j = 0;
 	arg[j] = strtok(buffer, delim);
-	while (arg[j])
+	while (arg[j] != NULL)
 	{
-		arg[++j] = strtok(NULL, delim);
-		printf("arg[%d] is : %s", j, arg[j]);
+		printf("arg[%d] is : %s\n",j , arg[j]);
+		j++;
+		arg[j] = strtok(NULL, delim);
 	}
+
 
 
 	child_ID = fork();
 	if (child_ID < 0)
 	{
 		_printstring("Forking Failed");
-		exit (0);
+		exit(0);
 	}
 	else if (child_ID == 0)
 	{
