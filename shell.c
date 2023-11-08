@@ -24,7 +24,7 @@ int main(int c, char **argv, char **env)
 	char *prompt = "(Shell)$ ";
 	char *buffer = NULL;
 	char *delim =  "\n";
-	char *arg[] = {NULL, NULL};
+	char *arg[1024];
 	size_t buff_size = 0;
 	ssize_t n_chars;
 	pid_t child_ID;
@@ -37,7 +37,8 @@ int main(int c, char **argv, char **env)
 	_printstring(prompt);
 
 	n_chars = getline(&buffer, &buff_size, stdin);
-
+	
+	/*to check if it is EOF vaule*/
 	if (n_chars == -1)
 	{
 	
@@ -56,9 +57,11 @@ int main(int c, char **argv, char **env)
 	arg[j] = strtok(buffer, delim);
 	while (arg[j])
 	{
-		arg[j] = strtok(NULL, delim);
-		j++;
+		arg[++j] = strtok(NULL, delim);
+		printf("arg[%d] is : %s", j, arg[j]);
 	}
+
+
 	child_ID = fork();
 	if (child_ID < 0)
 	{
