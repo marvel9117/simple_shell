@@ -4,7 +4,6 @@
 int main(int c, char **argv, char **env)
 {
 	(void)c; (void) argv;
-	char *prompt = "(feliamshell)$ ";
 	char *buffer = NULL, *path;
 	char *delim =  " \n";
 	char *arg[1024];
@@ -14,6 +13,7 @@ int main(int c, char **argv, char **env)
 	int status, i, j, fd;
 	int file_exec = 0;
 
+	signal(SIGINT, signalhandler);
 	fd = handle_args(c, argv, &file_exec);
 	
 
@@ -32,13 +32,14 @@ int main(int c, char **argv, char **env)
 		free(buffer);
 		 exit(0);
 	}
-	i = 0;
 
+	buffer = handle_comment(buffer);
+	i = 0;
 	/*each single charcter in buffer and see if it a new line char*/
 	while (buffer[i])
 	{
 		if (buffer[i] == '\n')
-			buffer[i] = 0;
+			buffer[i] = '\0';
 	i++;
 	}
 

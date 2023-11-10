@@ -34,3 +34,12 @@ int handle_args(int ac, char **argv, int *file_exec)
 	return (fd);
 }
 
+/**
+ * signalhandler - basic control to ctrl c interupt signal
+ * @signal_num: signal number
+ */
+
+void signalhandler(int __attribute__((unused))signal_num)
+{
+	write(0, "\n$ ", 3);
+}

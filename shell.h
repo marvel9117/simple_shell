@@ -18,7 +18,8 @@ int _builtincmd(char **arg);
 
 
 int handle_args(int ac, char **argv, int *file_exec);
-
+void signalhandler(int sinal_num);
+char *handle_comment(char *buffer);
 
 
 #endif /*SHELL_H*/
