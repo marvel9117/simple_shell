@@ -11,28 +11,29 @@ char *location(char *path,  char *arg)
 
 	pathtok = strtok(path_cpy, delim);
 
-	filepath = malloc(strlen(arg) * (strlen(pathtok) + 2));
-
 	while(pathtok != NULL)
 	{
+		filepath = malloc(strlen(pathtok) + strlen(arg) + 2);
+		if (filepath == NULL)
+		{
+			perror("Error alocating memory");
+			exit(EXIT_FAILURE);
+		}
+
 		strcpy(filepath, pathtok);
 		strcat(filepath, "/");
 		strcat(filepath, arg);
-		strcat(filepath, "\0");
 
 	if (access(filepath, X_OK) == 0)
 	{
 		/*free(path_cpy);*/
 		return (filepath);
 	}
+	free(filepath);
 	pathtok = strtok(NULL, delim);
 
 	}
-	free(filepath);
 	free(path_cpy);
-	/*check the file if it exists(status) and return 0*/
-	/*if (stat(arg, &buff) == 0)
-		return (arg);*/
 
 	return (NULL);
 }
