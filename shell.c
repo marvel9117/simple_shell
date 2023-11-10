@@ -9,21 +9,24 @@ int main(int c, char **argv, char **env)
 	char *delim =  " \n";
 	char *arg[1024];
 	size_t buff_size = 0;
-	ssize_t n_chars;
+	ssize_t num_chars;
 	pid_t child_ID;
-	int status, i, j;
+	int status, i, j, fd;
+	int file_exec = 0;
+
+	fd = handle_args(c, argv, &file_exec);
 	
 
 	while (1)
 	{
 
-	if(isatty(0))
-	_printstring(prompt);
+	if(isatty(STDIN_FILENO) == 1 & file_exec == 0)
+		write(1, "$ ", 2);
 
-	n_chars = getline(&buffer, &buff_size, stdin);
+	num_chars = getline(&buffer, &buff_size, stdin);
 	
 	/*to check if it is EOF vaule*/
-	if (n_chars == -1)
+	if (num_chars == EOF)
 	{
 	
 		free(buffer);
@@ -47,7 +50,6 @@ int main(int c, char **argv, char **env)
 		j++;
 		arg[j] = strtok(NULL, delim);
 	}
-	arg[j] = NULL;
 	
 	/*path handling*/
 	path = get_locate(arg[0]);
@@ -57,12 +59,10 @@ int main(int c, char **argv, char **env)
 		/*check for built in*/
 		if (_builtincmd(arg) != 0)
 		{
-			_printstring("command not founf\n");
+			_printstring("command not found\n");
 			continue;
 		}
-		else
-		/*_printstring("command not found\n");*/
-		continue;
+		
 	}
 
 	child_ID = fork();
@@ -80,8 +80,6 @@ int main(int c, char **argv, char **env)
 	{
 		wait(&status);
 	}
-
-	/*_printstring(buffer);*/
 
 	}
 
