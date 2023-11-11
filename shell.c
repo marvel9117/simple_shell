@@ -53,7 +53,7 @@ int main(int c, char **argv, char **env)
 	}
 	
 	/*path handling*/
-	path = get_locate(arg[0]);
+	path = handleloc(arg[0]);
 
 	if (path == NULL)
 	{

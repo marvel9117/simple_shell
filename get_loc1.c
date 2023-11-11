@@ -41,6 +41,7 @@ int handleloc(char **cmds)
 {
 	char *path, *path_loc;
 	char *token, *pointer_cpy;
+	int flag =0;
 	char *str_cpy;
 
 	if (cmds == NULL || cmds[0] == NULL || cmds[0][0] == '\0' || 
@@ -52,6 +53,23 @@ int handleloc(char **cmds)
 		return (0);
 
 	path_loc == getenv("PATH");
-	if (path_cpy
+	if (path_cpy == NULL)
+		return(127);
 
-
+	str_cpy = strdup(path_loc);
+	pointer_cpy = str_cpy;
+	while (1)
+	{
+		token = strtok(token, cmds[0]);
+		if (access(path, F_OK)  != -1)
+		{
+			free(cmds[0]);
+			cmds[0] = path;
+			flag = 0;
+			break;
+		}
+		free(path);
+	}
+	free(strcpy);
+	return (flag);
+}
