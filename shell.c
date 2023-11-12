@@ -45,15 +45,10 @@ int main(int c, char **argv, char **env)
 
 
 	j = 0;
-	arg[j] = strtok(buffer, delim);
-	while (arg[j] != NULL)
-	{
-		j++;
-		arg[j] = strtok(NULL, delim);
-	}
+	arg = parse_input(buffer, " ");
 	
 	/*path handling*/
-	path = handleloc(arg[0]);
+	path = handleloc(arg);
 
 	if (path == NULL)
 	{

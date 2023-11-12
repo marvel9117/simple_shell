@@ -53,7 +53,7 @@ int handleloc(char **cmds)
 		return (0);
 
 	path_loc == getenv("PATH");
-	if (path_cpy == NULL)
+	if (path_loc == NULL)
 		return(127);
 
 	str_cpy = strdup(path_loc);
@@ -70,6 +70,5 @@ int handleloc(char **cmds)
 		}
 		free(path);
 	}
-	free(strcpy);
 	return (flag);
 }

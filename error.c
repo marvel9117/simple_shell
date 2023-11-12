@@ -32,7 +32,7 @@ void print_error(char *prog, int *cmdr, char *msg)
 		_write(-1, NULL, 0);
 		_write(2, programname, _strlen(programname) + 1);
 		_write(2, ": ", 2);
-		numofcmd = itoa(*cmdsrun);
+		numofcmd = _itoaa(*cmdsrun);
 		_write(2, numofcmd, _strlen(numofcmd));
 		free(numofcmd);
 		_write(2, ": ", 2);
@@ -42,4 +42,18 @@ void print_error(char *prog, int *cmdr, char *msg)
 		_write(2, "\n", 1);
 		_write(2, NULL, 0);
 	}
+}
+
+/**
+ * perror_exit - print error and provides information about the type of error
+ * that occured
+ * @msg: Error message
+ */
+
+void err_ext(char *msg)
+{
+	perror(msg);
+
+	exit(errno);
+	/*exit status that provide info about the error that occured*/
 }
