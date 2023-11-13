@@ -50,7 +50,8 @@ void print_error(char *prog, int *cmdr, char *msg)
  * @msg: Error message
  */
 
-void err_ext(char *msg)
+void error_exit(char *msg)
+
 {
 	perror(msg);
 

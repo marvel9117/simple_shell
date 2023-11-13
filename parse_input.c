@@ -43,7 +43,7 @@ char **parse_input(char *cmd_input, char *deli)
 	char *str_cpy;
 
 	if (cmd_input == NULL)
-		err_ext("Error parsing the command\n");
+		error_exit("Error parsing the command\n");
 
 	count_arg = arg_count(cmd_input, deli);
 	arg = _malloc(sizeof(char *) * (count_arg + 1));

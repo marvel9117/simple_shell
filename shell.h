@@ -12,6 +12,7 @@
 #include <errno.h>
 
 #define BUFFER_i 1024
+#define MAX_BUFFER_SIZE 250
 
 int _putchar(char c);
 int _printstring(char *str);
@@ -33,6 +34,8 @@ char *_strcpy(char *dest, char *src);
 char *_strdup(const char *str);
 int _strlen(const char *str);
 int _strcmps(char *fstring, const char *sub);
+int _strncmp(const char *str1, const char *str2, size_t n);
+char *_strncat(char *dest, const char *src, size_t n);
 
 void free_pp(char **p);
 void *_realloc(void *ptr, unsigned int s);
@@ -49,5 +52,14 @@ int cal_expo(unsigned int base, int power);
 
 char **parse_input(char *cmd_input, char *deli);
 int arg_count(char *cmd_input, char *deli);
+void error_exit(char *msg);
+
+
+void handle_dol_replacement(char **cmds);
+
+char *_strtok(char *str, char *deli);
+int isdeli(char ch, char *deli);
+
+char *_getenv(char *varname);
 
 #endif /*SHELL_H*/

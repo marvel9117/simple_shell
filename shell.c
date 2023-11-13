@@ -10,8 +10,9 @@ int main(int c, char **argv, char **env)
 	size_t buff_size = 0;
 	ssize_t num_chars;
 	pid_t child_ID;
-	int status, i, j, fd;
+	int status, i, j, fd, err = 0;
 	int file_exec = 0;
+	char **commands;
 
 	signal(SIGINT, signalhandler);
 	fd = handle_args(c, argv, &file_exec);
@@ -33,33 +34,11 @@ int main(int c, char **argv, char **env)
 		 exit(0);
 	}
 
-	buffer = handle_comment(buffer);
-	i = 0;
-	/*each single charcter in buffer and see if it a new line char*/
-	while (buffer[i])
-	{
-		if (buffer[i] == '\n')
-			buffer[i] = '\0';
-	i++;
-	}
+	//buffer = handle_comment(buffer);
 
+	_strtok(buffer, "\n");
 
-	j = 0;
-	arg = parse_input(buffer, " ");
-	
-	/*path handling*/
-	path = handleloc(arg);
-
-	if (path == NULL)
-	{
-		/*check for built in*/
-		if (_builtincmd(arg) != 0)
-		{
-			_printstring("command not found\n");
-			continue;
-		}
-		
-	}
+	commands = parse_input(buffer, " ");
 
 	child_ID = fork();
 	if (child_ID < 0)
@@ -69,7 +48,8 @@ int main(int c, char **argv, char **env)
 	}
 	else if (child_ID == 0)
 	{
-		if (execve(path, arg, env) == -1)
+		err = handleloc(commands);
+		if (execve(commands[0], commands, env) == -1)
 			_printstring("Command does not exit\n");
 	}
 	else

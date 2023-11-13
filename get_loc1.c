@@ -10,23 +10,20 @@
 
 char *getlocation(char *path,  char *arg)
 {
-	char *path_cpy, *pathtok, *filepath;
-	char *delim = ":", *buff;
-	
+	char *filepath;
+	int path_len = _strlen(path);
+	int arg_len = _strlen(arg);
 
-	path_cpy = strdup(path);
-	pathtok = strtok(path_cpy, delim);
-
-	filepath = malloc(sizeof(char *) * (strlen(pathtok) + strlen(arg) + 2));
+	filepath = malloc(sizeof(char *) * (path_len + arg_len + 2));
 	if (filepath == NULL)
 	{
 		perror("Error allocating memory");
 		exit(EXIT_FAILURE);
 	}
 
-	strcpy(filepath, pathtok);
-	strcat(filepath, "/");
-	strncat(filepath, arg, strlen(arg + 1));
+	_strcpy(filepath, path);
+	_strcat(filepath, "/");
+	_strncat(filepath, arg, arg_len + 1);
 
 	return (filepath);
 }
@@ -41,7 +38,7 @@ int handleloc(char **cmds)
 {
 	char *path, *path_loc;
 	char *token, *pointer_cpy;
-	int flag =0;
+	int flag = 127;
 	char *str_cpy;
 
 	if (cmds == NULL || cmds[0] == NULL || cmds[0][0] == '\0' || 
@@ -52,15 +49,19 @@ int handleloc(char **cmds)
 	if (access(cmds[0], F_OK) == 0)
 		return (0);
 
-	path_loc == getenv("PATH");
+	path_loc == _getenv("PATH");
 	if (path_loc == NULL)
 		return(127);
 
-	str_cpy = strdup(path_loc);
+	str_cpy = _strdup(path_loc);
 	pointer_cpy = str_cpy;
 	while (1)
 	{
-		token = strtok(token, cmds[0]);
+		token = _strtok(token, ":");
+		if (token == NULL)
+			break;
+		pointer_cpy = NULL;
+		path = getlocation(token, cmds[0]);
 		if (access(path, F_OK)  != -1)
 		{
 			free(cmds[0]);
@@ -70,5 +71,6 @@ int handleloc(char **cmds)
 		}
 		free(path);
 	}
+	free(str_cpy);
 	return (flag);
 }
