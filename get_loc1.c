@@ -14,7 +14,7 @@ char *getlocation(char *path,  char *arg)
 	int path_len = _strlen(path);
 	int arg_len = _strlen(arg);
 
-	filepath = malloc(sizeof(char *) * (path_len + arg_len + 2));
+	filepath = malloc(sizeof(char) * (path_len + arg_len + 2));
 	if (filepath == NULL)
 	{
 		perror("Error allocating memory");
@@ -49,7 +49,7 @@ int handleloc(char **cmds)
 	if (access(cmds[0], F_OK) == 0)
 		return (0);
 
-	path_loc == _getenv("PATH");
+	path_loc = _getenv("PATH");
 	if (path_loc == NULL)
 		return(127);
 
@@ -57,10 +57,9 @@ int handleloc(char **cmds)
 	pointer_cpy = str_cpy;
 	while (1)
 	{
-		token = _strtok(token, ":");
+		token = _strtok(pointer_cpy, ":");
 		if (token == NULL)
 			break;
-		pointer_cpy = NULL;
 		path = getlocation(token, cmds[0]);
 		if (access(path, F_OK)  != -1)
 		{
