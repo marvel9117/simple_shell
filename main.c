@@ -7,9 +7,8 @@
  * Return: 0 on success
  */
 
-int main(int c, char **argv)
+int main(__attribute__((unused))int c, char **argv)
 {
-	(void)c;
 	char  **command, *buff = NULL;
 	size_t buffsize = 0;
 	ssize_t numchar;
