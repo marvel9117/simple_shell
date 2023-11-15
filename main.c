@@ -7,17 +7,20 @@
  * Return: 0 on success
  */
 
-int main(__attribute__((unused))int c, char **argv)
+int main(int c, char **argv)
 {
 	char  **command, *buff = NULL;
 	size_t buffsize = 0;
 	ssize_t numchar;
-	int status = 1, loopcount = 0;
+	int status = 1, loopcount = 0, file_exec = 0;
+	int fd;
 
+	signal(SIGINT, signalhandler);
+	fd = handle_args(c, argv, &file_exec);
 	while (1)
 	{
 		loopcount++;
-		if (isatty(STDIN_FILENO))
+		if (isatty(STDIN_FILENO) == 1 && file_exec == 0)
 			write(STDOUT_FILENO, "$ ", 2);
 
 
@@ -38,5 +41,7 @@ int main(__attribute__((unused))int c, char **argv)
 		}
 		free(command);
 	}
+	if (file_exec)
+		close(fd);
 	return (status);
 }

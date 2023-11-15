@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <signal.h>
 
 #define PRINTM(ch) (write(STDOUT_FILENO, ch, _strlen(ch)))
 
@@ -57,4 +59,8 @@ void free_both(char **cmd, char *buff);
 void exit_builtin(char **comand, char *buff, char **argv, int loopcount);
 int _atoi(char *str);
 int _isalpha(int c);
+
+/*handle arg and sig*/
+int handle_args(int ac, char **argv, int *file_exec);
+void signalhandler(int __attribute__((unused))signal_num);
 #endif /*END_IF*/
