@@ -80,6 +80,5 @@ int handle_path(char **cmd)
 		free(commandpath);
 		dir = _strtok(NULL, ":");
 	}
-	free(path);
 	return (1);
 }

@@ -30,7 +30,7 @@ int main(__attribute__((unused))int c, char **argv)
 		command = parse_input(buff);
 		if (_strcmp(command[0], "exit") == 0)
 		{
-			exit(0);
+			exit_builtin(command, buff, argv, loopcount);
 		}
 		else
 		{

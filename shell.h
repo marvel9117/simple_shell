@@ -53,4 +53,8 @@ char *constructpath(char *, char *);
 int exec_cmd(char **cmd, char *input, int count, char **argv);
 void free_both(char **cmd, char *buff);
 
+/*exit*/
+void exit_builtin(char **comand, char *buff, char **argv, int loopcount);
+int _atoi(char *str);
+int _isalpha(int c);
 #endif /*END_IF*/
