@@ -70,10 +70,10 @@ int handle_path(char **cmd)
 		commandpath = constructpath(*cmd, dir);
 		if (stat(commandpath, &buffer) == 0)
 		{
-			free(*cmd);
+			/*free(*cmd);*/
 			*cmd = _strdup(commandpath);
-			free(commandpath);
-			free(path);
+			/*free(commandpath);
+			free(path);*/
 
 			return (0);
 		}
