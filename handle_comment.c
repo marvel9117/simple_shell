@@ -10,21 +10,24 @@
 
 char *handle_comment(char *buffer)
 {
-	char *nocomments = buffer;
+	char *original = buffer;
 
-	if (*buffer == '#')
+	while (*buffer != '\0')
 	{
-		*buffer = '\n';
-		*(buffer + 1) = '\0';
-	}
-	while (buffer && *buffer)
-	{
-		if (*buffer == '#' && *(buffer - 1) == ' ')
+		if (*buffer == '#' && (buffer == original || *(buffer - 1) == ' '))
 		{
-			*(buffer - 1) = '\n';
-			*buffer = '\0';
+			while (*buffer != '\0' && *buffer != '\n')
+			{
+				*buffer = '\0';
+				buffer++;
+			}
 		}
-		buffer++;
+		else
+		{
+			buffer++;
+		}
 	}
-	return (nocomments);
+
+	return (original);
 }
+
