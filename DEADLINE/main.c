@@ -44,8 +44,14 @@ int main(int c, char **argv)
 		}
 		else if (pid == 0)
 		{
-			if (execve(command[0], command, environ) == -1)
+			if(_strncmp(*command, "./", 2) != 0 && _strncmp(*command, "/", 1) != 0)
+			{
+				handle_path(command);
+			}
+			if (execve(*command, command, environ) == -1)
+			{
 				perror("Error");
+			}
 		}
 		wait(&status);
 	}

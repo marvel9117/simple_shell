@@ -7,6 +7,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#define PRINTM(ch) (write(STDOUT_FILENO, ch, _strlen(ch)))
 
 #define BUFFSIZE 1024
 
@@ -29,7 +34,15 @@ void p_error(char *input, int loopcount, char **argv);
 int _strlen(const char *str);
 unsigned int isdeli(char ch, const char *deli);
 char *_strtok(char *str, char *deli);
+int _strlen(const char *str);
+int _strncmp(const char *str1, const char *str2, size_t n);
+char *_strcat(char *desti, char *src);
+int handle_path(char **cmd);
+char *_strdup(const char *str);
 
-#define PRINTM(ch) (write(STDOUT_FILENO, ch, _strlen(ch)))
+/*finf_path*/
+char *_getenv(char *varname);
+void *_memset(void *ptr, int value, size_t  n);
+char *constructpath(char *exec, char *dir);
 
 #endif /*END_IF*/
