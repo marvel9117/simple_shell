@@ -3,9 +3,11 @@
 /**
  * _strncmp - compare the first n chracters of two string
  * @str1: the first string
- * @str@: the second string
+ * @str2: the second string
  *
  * @n: the number of chracter to compare
+ *
+ * Return: 0 success
  */
 
 int _strncmp(const char *str1, const char *str2, size_t n)
@@ -15,7 +17,7 @@ int _strncmp(const char *str1, const char *str2, size_t n)
 	for (i = 0; i < n; i++)
 	{
 		if (!str1[i] || !str2[i] || (unsigned char)str1[i] != (unsigned char)str2[i])
-			return(str1[i] - str2[i]);
+			return (str1[i] - str2[i]);
 	}
-	return 0;
+	return (0);
 }

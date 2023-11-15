@@ -11,7 +11,7 @@ char *_itoaa(int n)
 {
 	int j, k, len, digit, tmp1, i = 0;
 	unsigned int numm;
-	char *nums = _malloc(num_len((n > 0) ? n : -1 * n) + 2);
+	char *nums = malloc(num_len((n > 0) ? n : -1 * n) + 2);
 
 	if (!nums)
 		return (NULL);

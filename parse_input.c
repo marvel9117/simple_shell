@@ -1,66 +1,51 @@
 #include "shell.h"
 
-/*
- * arg_count - Fuction that count the number of argument in an input string
- * @cmd_input: commandinputed as a string
- * @deli: delimeter that delimate the argument
- *
- * Return: count of argument in the string
- */
-
-int arg_count(char *cmd_input, char *deli)
-{
-	char *token, *token_ptr;
-	int count = 0;
-	char *cmd_cpy = _strdup(cmd_input);
-
-	token_ptr = cmd_cpy;
-	while((token = strtok(token_ptr, deli)) != NULL)
-	{
-		count++;
-		token_ptr = NULL;
-	}
-	free(cmd_cpy);
-
-	return (count);
-}
-
 /**
- * parse_input - parse user input as an array of string
- * where element of the string represent each argument
- *
- * @cmd_input: The command sinput giving by user
- * @deli: Character that indicates the delimeter
- *
- * Return: Array of parsed argument
+ * parse_input - Tokenizing an input string into an array of strings.
+ * @input: The user input to parse
+ * Return: Array of pointers to tokens.
  */
 
-char **parse_input(char *cmd_input, char *deli)
+char **parse_input(char *input)
 {
-	char **arg, *tok, *tok_ptr;
-	int i = 0;
-	int count_arg = 0;
-	char *str_cpy;
+	char **tokns;
+	char *tok;
+	int i;
+	int buffsize = BUFFSIZE;
+	char **tmp;
 
-	if (cmd_input == NULL)
-		error_exit("Error parsing the command\n");
+	if (input == NULL)
+		return (NULL);
 
-	count_arg = arg_count(cmd_input, deli);
-	arg = _malloc(sizeof(char *) * (count_arg + 1));
-
-	str_cpy = _strdup(cmd_input);
-	tok_ptr = str_cpy;
-	for (i = 0; i < count_arg; i++)
+	tokns = malloc(sizeof(char *) * buffsize);
+	if (tokns == NULL)
 	{
-		tok = strtok(tok_ptr, deli);
-		if (tok == NULL)
-			break;
-		tok_ptr = NULL;
-
-		arg[i] = _strdup(tok);
+		perror("hsh: allocation error");
+		return (NULL);
 	}
 
-		free(str_cpy);
+	i = 0;
+	tok = _strtok(input, " \t\n\r\a");
+	while (tok != NULL)
+	{
+		tokns[i] = tok;
+		i++;
 
-		return (arg);
+		if (i >= buffsize)
+		{
+			buffsize += BUFFSIZE;
+			tmp = _realloc(tokns, sizeof(char *) * buffsize);
+			if (tmp == NULL)
+			{
+				perror("hsh: allocation error");
+				free(tokns);
+				return (NULL);
+			}
+			tokns = tmp;
+		}
+		tok = _strtok(NULL, "\t\n\r\a");
+	}
+	tokns[i] = NULL;
+
+	return (tokns);
 }

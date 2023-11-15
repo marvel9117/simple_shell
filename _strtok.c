@@ -1,68 +1,68 @@
 #include "shell.h"
 
-/*static variable on the first call*/
-static char *NEW_TOKEN_PTR = "";
-static int NOINIT_TKNPTR = 1;
-
 /**
  * isdeli - check if character is a delimeter or not
  * @ch:  the character to evaluate
  * @deli: the character as delimeter
  *
- * Return: 1 if ch is a delimeter, 0 if not
+ * Return: 1 if ch match a delimeter, 0 if not
  */
 
-int isdeli(char ch, char *deli)
+unsigned int isdeli(char ch, const char *deli)
 {
-	while(*deli != '\0')
+	if (deli == NULL)
+		return (0);
+
+	while (*deli != '\0')
 	{
 		if (ch == *deli)
 			return (1);
 		deli++;
 	}
 
-	return(0);
+	return (0);
 }
 
 /**
- * _strtok - breakes string into an individual token
+ * _strtok - breakes string into an individual token based on specified deli
  * @str: string to tokenize
  * @deli: the delimeter in which the string will be divided with
  *
- * Return: Tokenized string
+ * Return: Pointer to the next token or null if there is no more token
  */
 
 char *_strtok(char *str, char *deli)
 {
-	char *curent_pos;
-	char *start_tkn = NULL;
+	char *current_pos;
+	char *start_tkn;
+	static char *original_str;
 
-	if(NOINIT_TKNPTR == 1)
-	{
-		NEW_TOKEN_PTR = NULL;
-		NOINIT_TKNPTR = 0;
-	}
-
-	if ((str == NULL && NEW_TOKEN_PTR == NULL) || (str != NULL && str[0] == '\0'))
+	if (deli == NULL)
 		return (NULL);
 
 	if (str != NULL)
-		NEW_TOKEN_PTR = str;
+		current_pos = str;
+	else
+		current_pos = original_str;
 
-	for (curent_pos = NEW_TOKEN_PTR; *curent_pos != '\0'; curent_pos++)
+	if (current_pos == NULL || *current_pos == '\0')
+		return (NULL);
+
+	start_tkn = current_pos;
+
+	while (*current_pos != '\0')
 	{
-		if(!isdeli(*curent_pos, deli))
+		if (isdeli(*current_pos, deli) == 1)
 		{
-			start_tkn = curent_pos;
-			while(*curent_pos != '\0' && !isdeli(*curent_pos, deli))
-				curent_pos++;
-
-			NEW_TOKEN_PTR = curent_pos;
-			*curent_pos = '\0';
-
-			return(start_tkn);
+			*current_pos = '\0';
+			current_pos++;
+			if (*current_pos != '\0')
+				original_str = current_pos;
+			else
+				original_str = NULL;
+			return (start_tkn);
 		}
+		current_pos++;
 	}
-
-	return (NULL);
+	return (start_tkn);
 }

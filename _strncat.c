@@ -5,6 +5,8 @@
  * @dest: destination string
  * @src: source string
  * @n: number of characters of resulting string dest
+ *
+ * Return: concated string
  */
 
 char *_strncat(char *dest, const char *src, size_t n)
@@ -16,5 +18,5 @@ char *_strncat(char *dest, const char *src, size_t n)
 	while (src[j] && j < n)
 		dest[i++] = src[j++];
 	dest[i] = '\0';
-	return(dest);
+	return (dest);
 }

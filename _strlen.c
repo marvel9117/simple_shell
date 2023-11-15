@@ -8,7 +8,7 @@
 
 int _strlen(const char *str)
 {
-	int count;
+	int count = 0;
 
 	if (!str)
 		return (0);
