@@ -50,6 +50,6 @@ char *constructpath(char *, char *);
 
 
 /**exec_command*/
-int exec_cmd(char **cmd,char *input, int count, char **argv);
+int exec_cmd(char **cmd, char *input, int count, char **argv);
 
 #endif /*END_IF*/
