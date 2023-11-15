@@ -8,9 +8,9 @@
 
 char **parse_input(char *input)
 {
-	char **tokns;
+	char **tokns = NULL;
 	char *tok;
-	int i;
+	int i = 0;
 	int buffsize = BUFFSIZE;
 	char **tmp;
 
@@ -23,8 +23,6 @@ char **parse_input(char *input)
 		perror("hsh: allocation error");
 		return (NULL);
 	}
-
-	i = 0;
 	tok = _strtok(input, " \t\n\r\a");
 	while (tok != NULL)
 	{
@@ -34,6 +32,7 @@ char **parse_input(char *input)
 		if (i >= buffsize)
 		{
 			buffsize += BUFFSIZE;
+
 			tmp = _realloc(tokns, sizeof(char *) * buffsize);
 			if (tmp == NULL)
 			{

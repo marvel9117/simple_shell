@@ -62,7 +62,7 @@ int handle_path(char **cmd)
 	char *path, *dir, *commandpath;
 	struct stat buffer;
 
-	path = getenv("PATH");
+	path = _getenv("PATH");
 	dir = _strtok(path, ":");
 
 	while (dir != NULL)

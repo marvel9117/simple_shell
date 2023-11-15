@@ -51,5 +51,6 @@ char *constructpath(char *, char *);
 
 /**exec_command*/
 int exec_cmd(char **cmd, char *input, int count, char **argv);
+void free_both(char **cmd, char *buff);
 
 #endif /*END_IF*/

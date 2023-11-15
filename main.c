@@ -36,8 +36,7 @@ int main(__attribute__((unused))int c, char **argv)
 		{
 			exec_cmd(command, buff, loopcount, argv);
 		}
+		free(command);
 	}
-
-	free(buff);
 	return (status);
 }
