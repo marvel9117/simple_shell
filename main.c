@@ -32,6 +32,7 @@ int main(int c, char **argv)
 		}
 		buff = handle_comment(buff);
 		command = parse_input(buff);
+		handle_dol_replacement(command);
 		if (_strcmp(command[0], "exit") == 0)
 		{
 			exit_builtin(command, buff, argv, loopcount);
