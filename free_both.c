@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * free_both - Free two aprray of character pointer
- * @cmd array pointer
+ * @cmd: array pointer
  * @buff: charcter pointer
  * Return: nothing
  */
