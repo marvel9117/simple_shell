@@ -19,17 +19,19 @@ void exit_builtin(char **comand, char *buff, char **argv, int loopcount)
 		free(comand);
 		exit(EXIT_SUCCESS);
 	}
-
-	for (i = 0; comand[1][1]; i++)
+	while (comand[1][i])
 	{
-		if (_isalpha(comand[1][i]))
+		if (_isalpha(comand[1][i++]) != 0)
 		{
 			p_error(argv[0], loopcount, comand);
-			return;
+			break;
+		}
+		else
+		{
+			status = _atoi(comand[1]);
+			free(buff);
+			free(comand);
+			exit(status);
 		}
 	}
-	status = _atoi(comand[1]);
-	free(buff);
-	free(comand);
-	exit(status);
 }
