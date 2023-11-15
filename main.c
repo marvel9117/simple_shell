@@ -30,6 +30,7 @@ int main(int c, char **argv)
 			free(buff);
 			exit(0);
 		}
+		buff = handle_comment(buff);
 		command = parse_input(buff);
 		if (_strcmp(command[0], "exit") == 0)
 		{

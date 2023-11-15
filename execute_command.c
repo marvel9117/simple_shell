@@ -37,6 +37,8 @@ int exec_cmd(char **cmd, char *input, int count, char **argv)
 		if (execve(*cmd, cmd, environ) == -1)
 		{
 			p_error(cmd[0], count, argv);
+			free(input);
+			free(cmd);
 			exit(EXIT_FAILURE);
 		}
 		return (EXIT_SUCCESS);

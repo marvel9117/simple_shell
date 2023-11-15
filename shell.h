@@ -63,4 +63,5 @@ int _isalpha(int c);
 /*handle arg and sig*/
 int handle_args(int ac, char **argv, int *file_exec);
 void signalhandler(int __attribute__((unused))signal_num);
+char *handle_comment(char *buffer);
 #endif /*END_IF*/
