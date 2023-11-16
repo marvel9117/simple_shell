@@ -30,4 +30,3 @@ char *handle_comment(char *buffer)
 
 	return (original);
 }
-
