@@ -1,5 +1,6 @@
 #include "shell.h"
 
+
 /**
  * exit_builtin - checks if a command is "exit"
  * @comand: the tokenized commaned
@@ -11,7 +12,7 @@
 
 void exit_builtin(char **comand, char *buff, char **argv, int loopcount)
 {
-	int status, i = 0;
+	int statue, i = 0;
 
 	if (comand[1] == NULL)
 	{
@@ -19,16 +20,19 @@ void exit_builtin(char **comand, char *buff, char **argv, int loopcount)
 		free(comand);
 		exit(EXIT_SUCCESS);
 	}
-	for (i = 0; comand[1][i] != '\0'; i++)
+	while (comand[1][i])
 	{
 		if (_isalpha(comand[1][i++]) != 0)
 		{
 			p_error(argv[0], loopcount, comand);
-			return;
+			break;
+		}
+		else
+		{
+			statue = _atoi(comand[1]);
+			free(buff);
+			free(comand);
+			exit(statue);
 		}
 	}
-	status = _atoi(comand[1]);
-	free(buff);
-	free(comand);
-	exit(status);
 }
